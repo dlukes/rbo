@@ -34,10 +34,20 @@ decide she has seen enough in order to hazard a conclusion) at each transition
 to a lower rank. Formally, it's the parameter of the geometric progression which
 weights the contribution of overlaps at different depths.
 
-The code is primary optimized for correctness, not speed. Build your own faster
-version and check it for correctness by comparing against this one!
+The code is primarily optimized for correctness, not speed. Build your own
+faster version and check it for correctness by comparing against this one!
 
 Requirements
 ------------
 
 Built and tested under Python 3.5.2. No external dependencies.
+
+License
+-------
+
+Credits for the concept of the RBO measure are indicated above.
+
+Copyright (this implementation) © 2016 [ÚČNK](http://korpus.cz)/David Lukeš
+
+This implementation is distributed under the
+[GNU General Public License v3](http://www.gnu.org/licenses/gpl-3.0.en.html).
