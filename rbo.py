@@ -48,10 +48,29 @@ def overlap(list1, list2, depth):
     inflates the result.
 
     There are no guidelines in the paper as to what's a good way to calculate
-    this, but a good guess is agreement scaled by depth.
+    this, but a good guess is agreement scaled by the minimum between the
+    requested depth and the lengths of the considered lists (overlap shouldn't
+    be larger than the number of ranks in the shorter list, otherwise results
+    are conspicuously wrong when the lists are of unequal lengths -- rbo_ext is
+    not between rbo_min and rbo_min + rbo_res.
+
+    >>> overlap("abcd", "abcd", 3)
+    3.0
+
+    >>> overlap("abcd", "abcd", 5)
+    4.0
+
+    >>> overlap(["a", {"b", "c"}, "d"], ["a", {"b", "c"}, "d"], 2)
+    2.0
+
+    >>> overlap(["a", {"b", "c"}, "d"], ["a", {"b", "c"}, "d"], 3)
+    3.0
 
     """
-    return agreement(list1, list2, depth) * depth
+    return agreement(list1, list2, depth) * min(depth, len(list1), len(list2))
+    # NOTE: comment the preceding and uncomment the following line if you want
+    # to stick to the algorithm as defined by the paper
+    # return raw_overlap(list1, list2, depth)[0]
 
 
 def agreement(list1, list2, depth):
@@ -141,7 +160,7 @@ def rbo_res(list1, list2, p):
     >>> _numtest(rbo_res("abcdefg", "abcdefg", .9))
     '0.233'
     >>> _numtest(rbo_res("abcdefg", "abcdefghijklmnopqrstuvwxyz", .9))
-    '0.186'
+    '0.239'
 
     """
     S, L = sorted((list1, list2), key=len)
@@ -236,4 +255,4 @@ def rbo_dict(dict1, dict2, p):
 
 if __name__ in ("__main__", "__console__"):
     import doctest
-    doctest.testmod(verbose=True)
+    doctest.testmod()
