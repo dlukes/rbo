@@ -10,6 +10,12 @@ contain the same items (up to the actually evaluated depth or at all). See "A
 similarity measure for indefinite rankings" by W. Webber, A. Moffat and J. Zobel
 (2011), <http://dx.doi.org/10.1145/1852102.1852106>.
 
+The definition of overlap has been modified to account for ties. Without this,
+results for lists with tied items were being inflated. The modification itself
+is not mentioned in the paper but seems to be reasonable, see function
+`overlap()`. Places in the code which diverge from the spec in the paper
+because of this are highlighted with comments (search for "NOTE").
+
 The functions intended for external use are `rbo()` and `rbo_dict()`, plus
 possibly `average_overlap()` (for comparison purposes). `rbo()` receives two
 sorted lists where each individual item is a hashable object or a set of
