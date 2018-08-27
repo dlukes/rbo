@@ -12,13 +12,21 @@ similarity measure for indefinite rankings" by W. Webber, A. Moffat and J. Zobel
 
 The functions intended for external use are `rbo()` and `rbo_dict()`, plus
 possibly `average_overlap()` (for comparison purposes). `rbo()` receives two
-sorted lists where each individual item is an immutables or a set of immutables
-(to represent overlap):
+sorted lists where each individual item is a hashable object or a set of
+hashable objects (to represent ties):
 
 ```python
 >>> rbo([{'c', 'a'}, 'b', 'd'], ['a', {'c', 'b'}, 'd'], p=.9)
 {'res': 0.47747163566865164, 'min': 0.48919503099801515, 'ext': 0.9666666666666667}
 ```
+
+The function returns a dict with three keys whose values correspond to three RBO
+estimates (all defined in the paper):
+
+- `min` is a lower-bound estimate
+- `res` is the corresponding *residual*; `min` + `res` constitutes an upper
+  bound estimate
+- `ext` is an *ext*rapolated point estimate
 
 By contrast, `rbo_dict` takes a dict mapping the items to sort to scores
 according to which they should be sorted:
@@ -31,7 +39,8 @@ according to which they should be sorted:
 Conceptually, the `p` parameter of both functions represents the probability
 that a person doing a manual comparison of the ranked lists would stop (i.e.
 decide she has seen enough in order to hazard a conclusion) at each transition
-to a lower rank. Formally, it's the parameter of the geometric progression which
+to a lower rank. In other words, it "models the user's *persistence*" (Webber
+et. al, p. 17). Formally, it's the parameter of the geometric progression which
 weights the contribution of overlaps at different depths.
 
 The code is primarily optimized for correctness, not speed. Build your own

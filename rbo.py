@@ -3,8 +3,8 @@
 """Rank-biased overlap, a ragged sorted list similarity measure.
 
 See http://doi.acm.org/10.1145/1852102.1852106 for details. All functions
-directly taken from the paper are named so that they can be clearly
-cross-identified.
+directly corresponding to concepts from the paper are named so that they can be
+clearly cross-identified.
 
 The definition of overlap has been modified to account for ties. Without this,
 results for lists with tied items were being inflated. The modification itself
@@ -153,9 +153,9 @@ def rbo_res(list1, list2, p):
 
     See equation (30) in paper.
 
-    NOTE: The doctests weren't verified but seem plausible. In particular, for
-    identical lists, ``rbo_min()`` and ``rbo_res()`` should add up to 1, which
-    is the case.
+    NOTE: The doctests weren't verified against manual computations but seem
+    plausible. In particular, for identical lists, ``rbo_min()`` and
+    ``rbo_res()`` should add up to 1, which is the case.
 
     >>> _numtest(rbo_res("abcdefg", "abcdefg", .9))
     '0.233'
@@ -181,7 +181,8 @@ def rbo_ext(list1, list2, p):
 
     See equation (32) in paper.
 
-    NOTE: The doctests weren't verified but seem plausible.
+    NOTE: The doctests weren't verified against manual computations but seem
+    plausible.
 
     >>> _numtest(rbo_ext("abcdefg", "abcdefg", .9))
     '1.000'
