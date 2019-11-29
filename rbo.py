@@ -1,5 +1,3 @@
-#!/usr/bin/env python3
-
 """Rank-biased overlap, a ragged sorted list similarity measure.
 
 See http://doi.acm.org/10.1145/1852102.1852106 for details. All functions
@@ -13,6 +11,8 @@ is not mentioned in the paper but seems to be reasonable, see function
 because of this are highlighted with comments.
 
 """
+
+from __future__ import division
 
 import math
 from bisect import bisect_left
@@ -168,8 +168,8 @@ def rbo_res(list1, list2, p):
     s, l = len(S), len(L)
     x_l = overlap(list1, list2, l)
     # since overlap(...) can be fractional in the general case of ties and f
-    # must be an integer → math.ceil()
-    f = math.ceil(l + s - x_l)
+    # must be an integer --> math.ceil()
+    f = int(math.ceil(l + s - x_l))
     # upper bound of range() is non-inclusive, therefore + 1 is needed
     term1 = s * sum(p ** d / d for d in range(s + 1, f + 1))
     term2 = l * sum(p ** d / d for d in range(l + 1, f + 1))
