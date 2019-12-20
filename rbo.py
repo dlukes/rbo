@@ -226,8 +226,6 @@ def sort_dict(dct):
     items = []
     # items should be unique, scores don't have to
     for item, score in dct.items():
-        # sort in descending order, i.e. according to ``-score``
-        score = -score
         i = bisect_left(scores, score)
         if i == len(scores):
             scores.append(score)
