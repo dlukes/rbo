@@ -22,25 +22,29 @@ sorted lists where each individual item is a hashable object or a set of
 hashable objects (to represent ties):
 
 ```python
->>> rbo([{'c', 'a'}, 'b', 'd'], ['a', {'c', 'b'}, 'd'], p=.9)
-{'res': 0.47747163566865164, 'min': 0.48919503099801515, 'ext': 0.9666666666666667}
+>>> rbo([{"a", "c"}, "b", "d"], ["a", {"b", "c"}, "d"], p=.9)
+RBO(min=0.48919503099801515, res=0.47747163566865164, ext=0.9666666666666667)
 ```
 
-The function returns a dict with three keys whose values correspond to three RBO
-estimates (all defined in the paper):
+The function returns a `namedtuple` with three fields whose values correspond
+to three RBO estimates (all defined in the paper):
 
 - `min` is a lower-bound estimate
 - `res` is the corresponding *residual*; `min` + `res` constitutes an upper
   bound estimate
 - `ext` is an *ext*rapolated point estimate
 
-By contrast, `rbo_dict` takes a dict mapping the items to sort to scores
+By contrast, `rbo_dict` takes a dict mapping the items to sort to the scores
 according to which they should be sorted:
 
 ```python
->>> rbo_dict(dict(a=1, b=2, c=1, d=3), dict(a=1, b=2, c=2, d=3), p=.9)
-{'ext': 0.9666666666666667, 'res': 0.47747163566865164, 'min': 0.48919503099801515}
+>>> rbo_dict(dict(a=1, b=2, c=1, d=3), dict(a=1, b=2, c=2, d=3), p=.9, sort_ascending=True)
+RBO(min=0.48919503099801515, res=0.47747163566865164, ext=0.9666666666666667)
 ```
+
+Scores are typically the higher the better, so the sort is descending by
+default. You can specify `sort_ascending=True` to override this if you have
+some rank-like score (i.e. the lower the better).
 
 Conceptually, the `p` parameter of both functions represents the probability
 that a person doing a manual comparison of the ranked lists would stop (i.e.
