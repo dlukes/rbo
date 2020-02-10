@@ -93,10 +93,10 @@ def overlap(list1, list2, depth):
     3.0
 
     """
-    return agreement(list1, list2, depth) * min(depth, len(list1), len(list2))
+    # return agreement(list1, list2, depth) * min(depth, len(list1), len(list2))
     # NOTE: comment the preceding and uncomment the following line if you want
     # to stick to the algorithm as defined by the paper
-    # return raw_overlap(list1, list2, depth)[0]
+    return raw_overlap(list1, list2, depth)[0]
 
 
 def agreement(list1, list2, depth):
@@ -224,8 +224,8 @@ def rbo_ext(list1, list2, p):
     # the paper says overlap(..., d) / d, but it should be replaced by
     # agreement(..., d) defined as per equation (28) so that ties are handled
     # properly (otherwise values > 1 will be returned)
-    # sum1 = sum(p**d * overlap(list1, list2, d)[0] / d for d in range(1, l + 1))
-    sum1 = sum(p ** d * agreement(list1, list2, d) for d in range(1, l + 1))
+    sum1 = sum(p ** d * overlap(list1, list2, d) / d for d in range(1, l + 1))
+    # sum1 = sum(p ** d * agreement(list1, list2, d) for d in range(1, l + 1))
     sum2 = sum(p ** d * x_s * (d - s) / s / d for d in range(s + 1, l + 1))
     term1 = (1 - p) / p * (sum1 + sum2)
     term2 = p ** l * ((x_l - x_s) / l + x_s / s)
